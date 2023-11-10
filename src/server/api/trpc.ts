@@ -7,6 +7,8 @@
  * need to use are documented accordingly near the end.
  */
 
+export const ADMIN_USERNAMES = ["samvdst", "NoWay4u_Sir"];
+
 import { initTRPC, TRPCError } from "@trpc/server";
 import { type NextRequest } from "next/server";
 import superjson from "superjson";
@@ -119,6 +121,23 @@ const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
   });
 });
 
+export const isAdmin = (username: string | null | undefined) => {
+  return username && ADMIN_USERNAMES.includes(username);
+};
+
+/** Reusable middleware that enforces users are logged in before running the procedure. */
+const enforceUserIsFreddy = t.middleware(({ ctx, next }) => {
+  if (!ctx.session || !ctx.session.user || !isAdmin(ctx.session.user.name)) {
+    throw new TRPCError({ code: "UNAUTHORIZED" });
+  }
+  return next({
+    ctx: {
+      // infers the `session` as non-nullable
+      session: { ...ctx.session, user: ctx.session.user },
+    },
+  });
+});
+
 /**
  * Protected (authenticated) procedure
  *
@@ -128,3 +147,4 @@ const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
  * @see https://trpc.io/docs/procedures
  */
 export const protectedProcedure = t.procedure.use(enforceUserIsAuthed);
+export const freddyProcedure = t.procedure.use(enforceUserIsFreddy);
