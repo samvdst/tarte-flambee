@@ -3,8 +3,6 @@ import Link from "next/link";
 import { RegisterTart } from "~/app/_components/register-tart";
 import { getServerAuthSession } from "~/server/auth";
 import { api } from "~/trpc/server";
-import { CreateTournament } from "./_components/create-tournament";
-import { isAdmin } from "~/server/api/trpc";
 
 export default async function Home() {
   const session = await getServerAuthSession();
@@ -46,49 +44,18 @@ export default async function Home() {
           </div>
         </div>
 
-        <FreddyView />
-        <PlayerShowcase />
+        <PlayerRegistration />
       </div>
     </main>
   );
 }
 
-async function FreddyView() {
-  const session = await getServerAuthSession();
-  if (!session?.user || !isAdmin(session.user.name)) return null;
-
-  const allTournaments = await api.tournament.getAllTournaments.query();
-
-  return (
-    <div className="w-full max-w-lg">
-      <h2 className="text-3xl font-bold">Freddy View</h2>
-      {allTournaments.length == 0 && (
-        <>
-          <CreateTournament />
-          <p className="mb-3">Keine Turniere</p>
-        </>
-      )}
-
-      {allTournaments.map((tournament) => (
-        <>
-          <h3 className="text-2xl font-bold">Du bist registriert</h3>
-          <p>
-            Rank: <span className="font-mono">{tournament.name}</span>
-            Rank:{" "}
-            <span className="font-mono">{tournament.datum.toISOString()}</span>
-          </p>
-        </>
-      ))}
-    </div>
-  );
-}
-
-async function PlayerShowcase() {
+async function PlayerRegistration() {
   const session = await getServerAuthSession();
   if (!session?.user) return null;
 
-  const activeTartFlambe = await api.registration.getActiveTartFlambe.query();
-  if (!activeTartFlambe) return <p>Kein Tart Flambe aktiv</p>;
+  const activeTournament = await api.registration.getActiveTartFlambe.query();
+  if (!activeTournament) return <p>Kein Tart Flambe aktiv</p>;
 
   const myRegistration = await api.registration.getMyRegistration.query();
 

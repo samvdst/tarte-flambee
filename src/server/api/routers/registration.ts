@@ -8,13 +8,13 @@ import {
 
 export const registrationRouter = createTRPCRouter({
   getActiveTartFlambe: protectedProcedure.query(async ({ ctx }) => {
-    const tartFlambe = await ctx.db.tournament.findFirst({
+    const tournament = await ctx.db.tournament.findFirst({
       where: {
         registrierungAktiv: true,
       },
     });
 
-    return tartFlambe;
+    return tournament;
   }),
 
   getMyRegistration: protectedProcedure.query(async ({ ctx }) => {
