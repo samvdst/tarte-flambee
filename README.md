@@ -16,10 +16,12 @@ Dies ist ein kleines Spassprojekt, um die Organisation von Tarte Flambee Turnier
   - [ ] Riot API Integration um Ranking zu validieren
   - [ ] OpenAI Integration um Wahrscheinlichkeit des Rankings zu schätzen
 - [x] Anzeige der Teilnehmer pro Tournier
-  - [ ] Teilnehmer nach Ranking zeigen (separate listen für Silber, Gold, etc)
-  - [ ] Filter-/Sortier-Funktion für Teilnehmer (z.B. nach Ranking)
-  - [ ] Spielerstatiskiken automatisch von Riot laden und anzeigen
-- [ ] Zufälliges Auswahlverfahren Spieler pairings zu erstellen (pro Ranking)
+  - [ ] Anzeige der Teilnehmer nach Ranking (getrennte Listen für Silber, Gold, etc.)
+  - [ ] Filter-/Sortierfunktion für Teilnehmer (z.B. nach Ranking)
+  - [ ] Spielerstatistiken automatisch von Riot laden und anzeigen
+- [ ] Zufallsgenerator für Spielerpaarungen (pro Ranking)
+- [ ] Dekoration der Seite
+  - [ ] Logos erlaubt? (benötigt offizielles Marketingmaterial)
 
 ## In dieser Anwendung verwendete Technologien
 
