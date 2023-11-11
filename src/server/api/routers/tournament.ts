@@ -17,30 +17,16 @@ export const tournamentRouter = createTRPCRouter({
         where: {
           id: input.id,
         },
-        select: {
-          id: true,
-          name: true,
-          datum: true,
-          registrierungAktiv: true,
-          Registrations: {
-            include: {
-              User: true,
-            },
-          },
-          _count: true,
+        include: {
+          Registrations: true,
         },
       });
     }),
 
   getAll: adminProcedure.query(async ({ ctx }) => {
     return await ctx.db.tournament.findMany({
-      select: {
-        id: true,
-        name: true,
-        datum: true,
-        registrierungAktiv: true,
+      include: {
         Registrations: true,
-        _count: true,
       },
       orderBy: {
         datum: "desc",

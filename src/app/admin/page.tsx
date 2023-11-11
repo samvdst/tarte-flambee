@@ -69,10 +69,7 @@ export default async function Admin() {
                   {tournament.Registrations.length}
                 </TableCell>
                 <TableCell className="text-right">
-                  <ActiveTournamentToggle
-                    tournamentId={tournament.id}
-                    active={tournament.registrierungAktiv}
-                  />
+                  <ActiveTournamentToggle tournament={tournament} />
                 </TableCell>
               </TableRow>
             ))}
