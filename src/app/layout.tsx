@@ -14,7 +14,7 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title: "Tart Flambe | NoWay4u_Sir",
+  title: "Tarte Flambee | NoWay4u_Sir",
   description: "Created by samvdst",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
