@@ -53,8 +53,9 @@ async function PlayerRegistration() {
   if (!session?.user) return null;
 
   const activeTournament = await api.registration.getActiveTournament.query();
-  if (!activeTournament)
+  if (!activeTournament) {
     return <p>Heute findet leider kein Tarte Flambee statt</p>;
+  }
 
   const myRegistration = await api.registration.getMyRegistration.query();
 
