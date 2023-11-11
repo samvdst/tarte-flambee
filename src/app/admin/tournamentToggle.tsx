@@ -7,7 +7,7 @@ export function ActiveTournamentToggle({
   tournamentId,
   active,
 }: {
-  tournamentId: number;
+  tournamentId: string;
   active: boolean;
 }) {
   const tournamentToggle = api.tournament.toggleActive.useMutation();

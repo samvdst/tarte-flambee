@@ -7,10 +7,13 @@ import {
 } from "~/server/api/trpc";
 
 export const registrationRouter = createTRPCRouter({
-  getActiveTartFlambe: protectedProcedure.query(async ({ ctx }) => {
+  getActiveTournament: protectedProcedure.query(async ({ ctx }) => {
     const tournament = await ctx.db.tournament.findFirst({
       where: {
         registrierungAktiv: true,
+      },
+      orderBy: {
+        datum: "desc",
       },
     });
 

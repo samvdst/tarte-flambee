@@ -6,6 +6,32 @@ import {
 } from "~/server/api/trpc";
 
 export const tournamentRouter = createTRPCRouter({
+  getById: adminProcedure
+    .input(
+      z.object({
+        id: z.string(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      return await ctx.db.tournament.findUnique({
+        where: {
+          id: input.id,
+        },
+        select: {
+          id: true,
+          name: true,
+          datum: true,
+          registrierungAktiv: true,
+          Registrations: {
+            include: {
+              User: true,
+            },
+          },
+          _count: true,
+        },
+      });
+    }),
+
   getAll: adminProcedure.query(async ({ ctx }) => {
     return await ctx.db.tournament.findMany({
       select: {
@@ -13,7 +39,7 @@ export const tournamentRouter = createTRPCRouter({
         name: true,
         datum: true,
         registrierungAktiv: true,
-        Registration: true,
+        Registrations: true,
         _count: true,
       },
       orderBy: {
@@ -42,7 +68,7 @@ export const tournamentRouter = createTRPCRouter({
   toggleActive: adminProcedure
     .input(
       z.object({
-        id: z.number(),
+        id: z.string(),
       }),
     )
     .mutation(async ({ ctx, input }) => {

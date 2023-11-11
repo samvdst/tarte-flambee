@@ -1,29 +1,11 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "sqlite"
-  // NOTE: When using mysql or sqlserver, uncomment the @db.Text annotations in model Account below
-  // Further reading:
-  // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
-  // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#string
-  url      = env("DATABASE_URL")
-}
-
-model Post {
-  id        Int      @id @default(autoincrement())
-  name      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  createdBy   User   @relation(fields: [createdById], references: [id])
-  createdById String
-
-  @@index([name])
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
 }
 
 model Registration {
@@ -34,21 +16,23 @@ model Registration {
   User       User       @relation(fields: [userId], references: [id])
   Tournament Tournament @relation(fields: [tartFlambeId], references: [id])
 
-  tartFlambeId Int
+  tartFlambeId String
   userId       String
 
   @@unique([userId, tartFlambeId])
+  @@index([userId])
+  @@index([tartFlambeId])
 }
 
 model Tournament {
-  id                 Int      @id @default(autoincrement())
+  id                 String   @id @default(cuid())
   name               String
   registrierungAktiv Boolean  @default(false)
   datum              DateTime
 
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @updatedAt
-  Registration Registration[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  Registrations Registration[]
 
   @@index([name])
 }
@@ -70,6 +54,7 @@ model Account {
   user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
+  @@index([userId])
 }
 
 model Session {
@@ -78,6 +63,8 @@ model Session {
   userId       String
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }
 
 model User {
@@ -88,7 +75,6 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
-  posts         Post[]
   Registration  Registration[]
 }
 
