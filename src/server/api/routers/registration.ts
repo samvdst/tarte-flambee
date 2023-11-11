@@ -12,6 +12,9 @@ export const registrationRouter = createTRPCRouter({
       where: {
         registrierungAktiv: true,
       },
+      select: {
+        id: true,
+      },
       orderBy: {
         datum: "desc",
       },
