@@ -7,6 +7,14 @@ import { TRPCReactProvider } from "~/trpc/react";
 import { isAdmin } from "~/server/api/trpc";
 import Link from "next/link";
 import { getServerAuthSession } from "~/server/auth";
+import {
+  ExternalLink,
+  ExternalLinkIcon,
+  Github,
+  GithubIcon,
+  LucideGithub,
+  TwitterIcon,
+} from "lucide-react";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -39,6 +47,22 @@ export default async function RootLayout({
           <TRPCReactProvider cookies={cookies().toString()}>
             {children}
           </TRPCReactProvider>
+          <footer className="flex space-x-4">
+            <Link
+              className="flex items-center space-x-1 underline"
+              href="https://github.com/samvdst/tarte-flambee"
+            >
+              <span>OpenSource auf Github</span>
+              <GithubIcon className="h-4 w-4" />
+            </Link>
+            <Link
+              className="flex items-center space-x-1 underline"
+              href="https://twitter.com/samvdst"
+            >
+              <span>Made by samvdst</span>
+              <TwitterIcon className="h-4 w-4" />
+            </Link>
+          </footer>
         </main>
       </body>
     </html>
