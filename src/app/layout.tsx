@@ -36,6 +36,13 @@ export default async function RootLayout({
   const userIsAdmin = isAdmin(session?.user?.name);
   return (
     <html lang="en">
+      <head>
+        <script
+          defer
+          data-domain="tarte-flambee.vercel.app"
+          src="/js/script.js"
+        ></script>
+      </head>
       <body className={`font-sans ${inter.variable}`}>
         <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
           {userIsAdmin && (
